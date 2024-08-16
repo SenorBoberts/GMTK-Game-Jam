@@ -17,7 +17,7 @@ func all_states():
 		arr.append(i)
 	return arr
 
-func elim(_a, direction):
+func elim(direction):
 	for t in range(1, possible_states.size()):
 		var a2 = ANCHORS[t]
 		if direction == 0 and a2[0] != 1:
@@ -27,16 +27,18 @@ func elim(_a, direction):
 		if direction == 2 and a2[3] != 1:
 			possible_states.erase(t)
 		if direction == 3 and a2[2] != 1:
-			possible_states.erase(t)
-	print(possible_states)
+			possible_states.erase(t)	
 		
 
 func collapse():
 	if type == 0:
 		# collapse randomly 
-		print("random collapse");
+		var toss = randi() % possible_states.size()
+		type = possible_states[toss]
+		possible_states = [] 
 	else: 
 		# collapse to t
+		possible_states = []
 		print("collapsed to " + str(type))
 	
 func set_type(t):

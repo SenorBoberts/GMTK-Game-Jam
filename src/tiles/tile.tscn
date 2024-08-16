@@ -1,15 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://dh4ax7ajt8mll"]
 
 [ext_resource type="Script" path="res://src/tiles/tile.gd" id="1_n6iec"]
-[ext_resource type="Texture2D" uid="uid://by51mbdfb1ubk" path="res://placeholder_ground.png" id="2_pfsrm"]
+[ext_resource type="Texture2D" uid="uid://b3ohuj11nfqj2" path="res://assets/placeholder_ground.png" id="2_nfb0n"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_36r3b"]
-texture = ExtResource("2_pfsrm")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yiv2y"]
+texture = ExtResource("2_nfb0n")
 0:0/0 = 0
 1:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_w572x"]
-sources/0 = SubResource("TileSetAtlasSource_36r3b")
+sources/1 = SubResource("TileSetAtlasSource_yiv2y")
 
 [node name="Tile" type="Node2D"]
 script = ExtResource("1_n6iec")
@@ -18,4 +18,4 @@ script = ExtResource("1_n6iec")
 position = Vector2(48, 48)
 tile_set = SubResource("TileSet_w572x")
 format = 2
-layer_0/tile_data = PackedInt32Array(131069, 0, 0, 65533, 0, 0, -3, 0, 0, -65539, 0, 0, -131075, 0, 0, -131074, 0, 0, -131073, 0, 0, -196608, 0, 0, -196607, 0, 0, -131071, 0, 0, -131072, 0, 0, -65537, 0, 0, -65538, 0, 0, -2, 0, 0, -1, 0, 0, -65536, 0, 0, -65535, 0, 0, 1, 0, 0, 0, 0, 0, 65535, 0, 0, 65534, 0, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0)
+layer_0/tile_data = PackedInt32Array(131069, 1, 0, 65533, 1, 0, -3, 1, 0, -65539, 1, 0, -131075, 1, 0, -131074, 1, 0, -131073, 1, 0, -196608, 1, 0, -196607, 1, 0, -131071, 1, 0, -131072, 1, 0, -65537, 1, 0, -65538, 1, 0, -2, 1, 0, -1, 1, 0, -65536, 1, 0, -65535, 1, 0, 1, 1, 0, 0, 1, 0, 65535, 1, 0, 65534, 1, 0, 131070, 1, 0, 131071, 1, 0, 65536, 1, 0, 65537, 1, 0)
