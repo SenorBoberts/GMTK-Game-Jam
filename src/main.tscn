@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cq02i33eyqoql"]
+
+[ext_resource type="PackedScene" uid="uid://okdme2rwhqj3" path="res://src/tiles/map_manager.tscn" id="1_30akh"]
+
+[node name="Main" type="Node2D"]
+
+[node name="MapManager" parent="." instance=ExtResource("1_30akh")]

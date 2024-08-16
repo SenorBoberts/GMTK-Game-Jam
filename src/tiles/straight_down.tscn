@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://eidnsiy7g8uv"]
+
+[ext_resource type="Script" path="res://src/tiles/straight_down.gd" id="1_u4n78"]
+[ext_resource type="Texture2D" uid="uid://by51mbdfb1ubk" path="res://placeholder_ground.png" id="2_pfsrm"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_36r3b"]
+texture = ExtResource("2_pfsrm")
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_w572x"]
+sources/0 = SubResource("TileSetAtlasSource_36r3b")
+
+[node name="straight_down" type="Node2D"]
+script = ExtResource("1_u4n78")
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2(48, 48)
+tile_set = SubResource("TileSet_w572x")
+format = 2
+layer_0/tile_data = PackedInt32Array(131069, 0, 0, 65533, 0, 0, -3, 0, 0, -65539, 0, 0, -131075, 0, 0, -131074, 0, 0, -131073, 0, 0, -196608, 0, 0, -196607, 0, 0, -131071, 0, 0, -131072, 0, 0, -65537, 0, 0, -65538, 0, 0, -2, 0, 0, -1, 0, 0, -65536, 0, 0, -65535, 0, 0, 1, 0, 0, 0, 0, 0, 65535, 0, 0, 65534, 0, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0)
