@@ -18,7 +18,7 @@ func all_states():
 	return arr
 
 func elim(_a, direction):
-	for t in possible_states:
+	for t in range(1, possible_states.size()):
 		var a2 = ANCHORS[t]
 		if direction == 0 and a2[0] != 1:
 			possible_states.erase(t)
