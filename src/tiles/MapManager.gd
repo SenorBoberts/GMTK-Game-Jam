@@ -40,6 +40,7 @@ func _ready():
 	iteration()
 	# Print Grid
 	pretty_print_grid()
+	# Turn into tiles
 	
 func generate_empty_grid():
 	for i in CANVAS_SIZE:
@@ -58,26 +59,27 @@ func add_entrance_and_exit():
 	tiles_filled += 2
 
 func iteration():
-	#while tiles_filled < CANVAS_SIZE**2:
+	while tiles_filled < CANVAS_SIZE**2:
 		var lowest = find_lowest()
 		var li = lowest[0]
 		var lj = lowest[1]
-		print(str(li) + " " + str(lj))
+		#print(str(li) + " " + str(lj))
 		var n = nodes[li][lj]
 		n.collapse()
 		update_nodes(li, lj, n.type)
+		tiles_filled += 1 
 
 func find_lowest():
 	var lowest_i = 0
 	var lowest_j = 0 
 	for i in CANVAS_SIZE:
 		for j in CANVAS_SIZE:
-			if nodes[i][j].type == 0 and nodes[i][j].possible_states.size() < nodes[lowest_i][lowest_j].possible_states.size():
-				print("here")
+			if nodes[i][j].type == 0 and nodes[i][j].states_size < nodes[lowest_i][lowest_j].states_size:
 				lowest_i = i 
 				lowest_j = j 
 	return [lowest_i, lowest_j]
 
+# REWRITE THIS SHIT
 func update_nodes(x, y, t):
 	var a = ANCHORS[t]
 	if a[0] == 1 and x - 1 >= 0:
