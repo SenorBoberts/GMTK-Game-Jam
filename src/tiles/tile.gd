@@ -22,7 +22,7 @@ func _ready():
 	
 func all_states():
 	var arr = []
-	for i in range(1, NUM_STATES):
+	for i in range(1, NUM_STATES - 1):
 		arr.append(i)
 	states_size = arr.size()
 	return arr
@@ -55,14 +55,13 @@ func elim(type, direction):
 	#print(possible_states)
 
 func collapse():
-	if possible_states.size() == 1:
+	if possible_states.size() == 0:
 		type = 7
 		possible_states = []
 		states_size = 1000
 	elif type == 0:
 		# collapse randomly 
-		var toss = randi() % possible_states.size() - 1 
-		type = possible_states[toss]
+		type = possible_states.pick_random()
 		possible_states = [] 
 		states_size = 1000
 	else: 

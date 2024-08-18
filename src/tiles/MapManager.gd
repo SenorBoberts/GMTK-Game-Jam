@@ -22,8 +22,8 @@ enum TILE_TYPES {
 const vertical_dict = {
 	"NORTH": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.LEFT_DOWN, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.GROUND],
 	"SOUTH": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.LEFT_UP, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND],
-	"EAST": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.LEFT_DOWN, TILE_TYPES.LEFT_UP, TILE_TYPES.GROUND],
-	"WEST": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND]
+	"EAST": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND],
+	"WEST": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.LEFT_DOWN, TILE_TYPES.LEFT_UP, TILE_TYPES.GROUND]
 }
 
 const horizontal_dict = {
@@ -62,10 +62,10 @@ const right_up_dict = {
 }
 
 const ground_dict = {
-	"NORTH": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.STRAIGHT_ACROSS, TILE_TYPES.LEFT_DOWN, TILE_TYPES.LEFT_UP, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND],
-	"SOUTH": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.STRAIGHT_ACROSS, TILE_TYPES.LEFT_DOWN, TILE_TYPES.LEFT_UP, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND],
-	"EAST": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.STRAIGHT_ACROSS, TILE_TYPES.LEFT_DOWN, TILE_TYPES.LEFT_UP, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND],
-	"WEST": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.STRAIGHT_ACROSS, TILE_TYPES.LEFT_DOWN, TILE_TYPES.LEFT_UP, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND],
+	"NORTH": [TILE_TYPES.STRAIGHT_ACROSS, TILE_TYPES.LEFT_UP, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND],
+	"SOUTH": [TILE_TYPES.STRAIGHT_ACROSS, TILE_TYPES.LEFT_DOWN, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.GROUND],
+	"EAST": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND],
+	"WEST": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.LEFT_DOWN, TILE_TYPES.LEFT_UP, TILE_TYPES.GROUND],
 }
 
 const VALIDNEIGHBOURS = {
@@ -84,7 +84,6 @@ func _ready():
 	# Add entrence and exit
 	add_entrance_and_exit()
 	# Iterate
-	#test_iter()
 	iteration()
 	# Print Grid
 	pretty_print_grid()
@@ -96,7 +95,7 @@ func generate_empty_grid():
 		for j in CANVAS_SIZE:
 			var curTile = newEmptyTile()
 			curTile.trim_edges(i, j)
-			curTile.position = Vector2(i * 80, j * 80)
+			curTile.position = Vector2(j * 80, i * 80)
 			nodes[i].append(curTile)
 
 func add_entrance_and_exit():
@@ -109,30 +108,14 @@ func add_entrance_and_exit():
 	nodes[CANVAS_SIZE - 1][CANVAS_SIZE - 1].add_tilemap()
 	update_nodes(CANVAS_SIZE - 1, CANVAS_SIZE - 1, 1)
 	tiles_filled += 2
-	
-func test_iter():
-	var li = 1
-	var lj = 0
-	var n = nodes[li][lj]
-	print(n.possible_states)
-	n.collapse()
-	update_nodes(li, lj, n.type)
-	tiles_filled += 1 
-	li = 2
-	lj = 0
-	n = nodes[li][lj]
-	print(n.possible_states)
-	#n.collapse()
-	#update_nodes(li, lj, n.type)
-	#tiles_filled += 1 
 
 func iteration():
 	while tiles_filled < CANVAS_SIZE**2:
 		var lowest = find_lowest()
 		var li = lowest[0]
 		var lj = lowest[1]
-		print(str(li) + " " + str(lj))
 		var n = nodes[li][lj]
+		print(str(li) + " " + str(lj) + " " + str(n.possible_states))
 		n.collapse()
 		n.add_tilemap()
 		update_nodes(li, lj, n.type)
