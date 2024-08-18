@@ -4,6 +4,9 @@ const NUM_STATES = 8
 var type : TILE_TYPES;
 var possible_states: Array;
 var states_size: int; 
+var scaling = 4;
+
+var straight_down = preload("res://src/tiles/maps/straight_down.tscn")
 
 func _ready():
 	type = TILE_TYPES.EMPTY
@@ -16,28 +19,41 @@ func all_states():
 	states_size = arr.size()
 	return arr
 
-#REWRITE THIS SHIT
-func elim(direction):
-	for t in range(1, possible_states.size()):
-		var a2 = ANCHORS[t]
-		if direction == 0 and a2[0] != 1:
-			possible_states.erase(t)
-			states_size -= 1
-		if direction == 1 and a2[1] != 1:
-			possible_states.erase(t)
-			states_size -= 1
-		if direction == 2 and a2[3] != 1:
-			possible_states.erase(t)
-			states_size -= 1
-		if direction == 3 and a2[2] != 1:
-			possible_states.erase(t)
-			states_size -= 1
-		
+func trim_edges(i, j):
+	if j == 0:
+		possible_states.erase(TILE_TYPES.STRAIGHT_ACROSS)
+		possible_states.erase(TILE_TYPES.LEFT_DOWN)
+		possible_states.erase(TILE_TYPES.LEFT_UP)
+	if j == CANVAS_SIZE - 1:
+		possible_states.erase(TILE_TYPES.STRAIGHT_ACROSS)
+		possible_states.erase(TILE_TYPES.RIGHT_UP)
+		possible_states.erase(TILE_TYPES.RIGHT_DOWN)
+	if i == 0:
+		possible_states.erase(TILE_TYPES.STRAIGHT_DOWN)
+		possible_states.erase(TILE_TYPES.LEFT_UP)
+		possible_states.erase(TILE_TYPES.RIGHT_UP)
+	if i == CANVAS_SIZE - 1:
+		possible_states.erase(TILE_TYPES.STRAIGHT_DOWN)
+		possible_states.erase(TILE_TYPES.LEFT_DOWN)
+		possible_states.erase(TILE_TYPES.RIGHT_DOWN)
+	print(str(i) + " " + str(j) + " " + str(possible_states))
+
+func elim(type, direction):
+	var a = VALIDNEIGHBOURS[type][direction]
+	#print("Updating")
+	#print("Starting" + str(possible_states))
+	#print("WITH" + str (a))
+	possible_states = intersect(a, possible_states)
+	#print(possible_states)
 
 func collapse():
-	if type == 0:
+	if possible_states.size() == 1:
+		type = 7
+		possible_states = []
+		states_size = 1000
+	elif type == 0:
 		# collapse randomly 
-		var toss = randi() % possible_states.size()
+		var toss = randi() % possible_states.size() - 1 
 		type = possible_states[toss]
 		possible_states = [] 
 		states_size = 1000
@@ -46,6 +62,12 @@ func collapse():
 		possible_states = []
 		states_size = 1000
 		print("collapsed to " + str(type))
+		
+func add_tilemap(i, j):
+	if type == 1:
+		var tm = straight_down.instantiate()
+		scale = Vector2(scale.x / 4, scale.y / 4)
+		add_child(tm)
 	
 func set_type(t):
 	type = t
