@@ -2,7 +2,7 @@ extends Node2D
 
 var tile = preload("res://src/tiles/tile.tscn")
 # Global size of the canvas
-const CANVAS_SIZE = 9
+const CANVAS_SIZE = 3
 # Global nodes array
 var nodes: Array;
 # Number of tiles filled in 
@@ -30,6 +30,25 @@ const ANCHORS = [
 	[1, 0, 1, 0],
 	[1, 1, 1, 1]
 ]
+
+const vertical_dict = {
+	"NORTH": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.LEFT_DOWN, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.GROUND],
+	"SOUTH": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.LEFT_UP, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND],
+	"EAST": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.LEFT_DOWN, TILE_TYPES.LEFT_UP, TILE_TYPES.GROUND],
+	"WEST": [TILE_TYPES.STRAIGHT_DOWN, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND]
+}
+
+const horizontal_dict = {
+	"NORTH": [TILE_TYPES.STRAIGHT_ACROSS, TILE_TYPES.LEFT_UP, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND],
+	"SOUTH": [TILE_TYPES.STRAIGHT_ACROSS, TILE_TYPES.LEFT_DOWN, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.GROUND],
+	"EAST": [TILE_TYPES.STRAIGHT_ACROSS, TILE_TYPES.LEFT_DOWN, TILE_TYPES.LEFT_UP, TILE_TYPES.GROUND],
+	"WEST": [TILE_TYPES.STRAIGHT_ACROSS, TILE_TYPES.RIGHT_DOWN, TILE_TYPES.RIGHT_UP, TILE_TYPES.GROUND]
+}
+
+const VALIDNEIGHBOURS = {
+	TILE_TYPES.STRAIGHT_DOWN: vertical_dict,
+	TILE_TYPES.STRAIGHT_ACROSS: horizontal_dict
+}
 
 func _ready():
 	# get empty grid of nulls
@@ -63,7 +82,7 @@ func iteration():
 		var lowest = find_lowest()
 		var li = lowest[0]
 		var lj = lowest[1]
-		#print(str(li) + " " + str(lj))
+		print(str(li) + " " + str(lj))
 		var n = nodes[li][lj]
 		n.collapse()
 		update_nodes(li, lj, n.type)
