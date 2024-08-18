@@ -89,7 +89,6 @@ func _ready():
 	# Print Grid
 	pretty_print_grid()
 	# Turn into tiles
-	nodes[0][0].add_tilemap(0, 0)
 	
 func generate_empty_grid():
 	for i in CANVAS_SIZE:
@@ -103,9 +102,11 @@ func generate_empty_grid():
 func add_entrance_and_exit():
 	nodes[0][0].set_type(1)
 	nodes[0][0].collapse()
+	nodes[0][0].add_tilemap()
 	update_nodes(0, 0, 1)
 	nodes[CANVAS_SIZE - 1][CANVAS_SIZE - 1].set_type(1)
 	nodes[CANVAS_SIZE - 1][CANVAS_SIZE - 1].collapse()
+	nodes[CANVAS_SIZE - 1][CANVAS_SIZE - 1].add_tilemap()
 	update_nodes(CANVAS_SIZE - 1, CANVAS_SIZE - 1, 1)
 	tiles_filled += 2
 	
@@ -133,6 +134,7 @@ func iteration():
 		print(str(li) + " " + str(lj))
 		var n = nodes[li][lj]
 		n.collapse()
+		n.add_tilemap()
 		update_nodes(li, lj, n.type)
 		tiles_filled += 1 
 

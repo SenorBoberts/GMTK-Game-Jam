@@ -6,7 +6,15 @@ var possible_states: Array;
 var states_size: int; 
 var scaling = 4;
 
-var straight_down = preload("res://src/tiles/maps/straight_down.tscn")
+const tile_maps = {
+	TILE_TYPES.STRAIGHT_DOWN: preload("res://src/tiles/maps/straight_down.tscn"),
+	TILE_TYPES.STRAIGHT_ACROSS: preload("res://src/tiles/maps/straight_across.tscn"),
+	TILE_TYPES.LEFT_DOWN: preload("res://src/tiles/maps/left_down.tscn"),
+	TILE_TYPES.LEFT_UP: preload("res://src/tiles/maps/left_up.tscn"),
+	TILE_TYPES.RIGHT_DOWN: preload("res://src/tiles/maps/right_down.tscn"),
+	TILE_TYPES.RIGHT_UP:  preload("res://src/tiles/maps/right_up.tscn"),
+	TILE_TYPES.GROUND:  preload("res://src/tiles/maps/ground.tscn")
+}
 
 func _ready():
 	type = TILE_TYPES.EMPTY
@@ -63,10 +71,9 @@ func collapse():
 		states_size = 1000
 		print("collapsed to " + str(type))
 		
-func add_tilemap(i, j):
-	if type == 1:
-		var tm = straight_down.instantiate()
-		scale = Vector2(scale.x / 4, scale.y / 4)
+func add_tilemap():
+		var tm = tile_maps[type].instantiate()
+		scale = Vector2(scale.x / 8, scale.y / 8)
 		add_child(tm)
 	
 func set_type(t):
